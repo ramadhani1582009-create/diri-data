@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Diri | Portfolio</title>
+    <!-- Font Awesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ==========================================
+           1. CSS RESET & VARIABLE SETUP
+           ========================================== */
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-secondary: #94a3b8;
+            --primary-color: #38bdf8;
+            --accent-color: #818cf8;
+            --border-color: #334155;
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #0f172a;
+            --text-secondary: #64748b;
+            --primary-color: #0284c7;
+            --accent-color: #4f46e5;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ==========================================
+           2. NAVBAR & THEMING
+           ========================================== */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] header {
+            background-color: rgba(248, 250, 252, 0.8);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-color);
+        }
+
+        /* ==========================================
+           3. HERO SECTION (TANPA FOTO)
+           ========================================== */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+
+        .avatar-placeholder {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 2.8rem;
+            color: #fff;
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero h2 {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            color: var(--text-secondary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(56, 189, 248, 0.4);
+        }
+
+        /* ==========================================
+           4. SECTIONS COMMON STYLES
+           ========================================== */
+        section {
+            padding: 50px 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 50%;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        /* Card Component */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary-color);
+        }
+
+        /* ==========================================
+           5. DATA DIRI / BIODATA GRID
+           ========================================== */
+        .bio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .bio-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bio-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            background-color: rgba(56, 189, 248, 0.1);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .bio-text h4 {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bio-text p {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* ==========================================
+           6. SKILLS SECTION
+           ========================================== */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .skill-card:hover {
+            border-color: var(--primary-color);
+        }
+
+        .skill-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        /* ==========================================
+           7. EXPERIENCE & EDUCATION TIMELINE
+           ========================================== */
+        .timeline {
+            border-left: 2px solid var(--border-color);
+            padding-left: 20px;
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .timeline-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        /* ==========================================
+           8. CONTACT & FOOTER
+           ========================================== */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-btn:hover {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero h2 { font-size: 1.1rem; }
+            .nav-links { display: none; } /* Sederhana untuk mobile */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">Portofolio.</a>
+                <ul class="nav-links">
+                    <li><a href="#about">Tentang</a></li>
+                    <li><a href="#skills">Keahlian</a></li>
+                    <li><a href="#experience">Pengalaman</a></li>
+                    <li><a href="#education">Pendidikan</a></li>
+                </ul>
+                <button class="theme-toggle" id="themeToggle" title="Ubah Mode Waktu">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- HERO SECTION -->
+        <section class="hero" id="about">
+            <!-- Icon Avatar Ganti Foto -->
+            <div class="avatar-placeholder">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <h1 id="user-name">Nama Lengkap Anda</h1>
+            <h2 id="user-title">Web Developer / Mahasiswa / Profesional</h2>
+            <p>
+                Halo! Saya adalah seorang pemuda yang berdedikasi tinggi di bidang teknologi dan pengembangan web. Saya senang mempelajari hal baru dan memecahkan masalah melalui kode yang bersih dan efisien.
+            </p>
+            <a href="mailto:emailanda@gmail.com" class="btn">
+                <i class="fa-regular fa-envelope"></i> Hubungi Saya
+            </a>
+        </section>
+
+        <!-- DATA DIRI / BIODATA -->
+        <section>
+            <h3 class="section-title">Informasi Pribadi</h3>
+            <div class="card">
+                <div class="bio-grid">
+                    <div class="bio-item">
+                        <div class="bio-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <div class="bio-text">
+                            <h4>Email</h4>
+                            <p>emailanda@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="bio-item">
+                        <div class="bio-icon"><i class="fa-solid fa-phone"></i></div>
+                        <div class="bio-text">
+                            <h4>Telepon / WA</h4>
+                            <p>+62 812-3456-7890</p>
+                        </div>
+                    </div>
+                    <div class="bio-item">
+                        <div class="bio-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <div class="bio-text">
+                            <h4>Lokasi</h4>
+                            <p>Jakarta, Indonesia</p>
+                        </div>
+                    </div>
+                    <div class="bio-item">
+                        <div class="bio-icon"><i class="fa-solid fa-globe"></i></div>
+                        <div class="bio-text">
+                            <h4>Bahasa</h4>
+                            <p>Indonesia, Inggris</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS SECTION -->
+        <section id="skills">
+            <h3 class="section-title">Keahlian & Skill</h3>
+            <div class="skills-container">
+                <div class="skill-card">
+                    <i class="fa-brands fa-html5"></i>
+                    <h4>HTML5</h4>
+                </div>
+                <div class="skill-card">
+                    <i class="fa-brands fa-css3-alt"></i>
+                    <h4>CSS3</h4>
+                </div>
+                <div class="skill-card">
+                    <i class="fa-brands fa-js"></i>
+                    <h4>JavaScript</h4>
+                </div>
+                <div class="skill-card">
+                    <i class="fa-brands fa-github"></i>
+                    <h4>Git & GitHub</h4>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE SECTION -->
+        <section id="experience">
+            <h3 class="section-title">Pengalaman Kerja / Organisasi</h3>
+            <div class="card">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2023 - Sekarang</div>
+                        <div class="timeline-title">Frontend Developer (Freelance)</div>
+                        <div class="timeline-subtitle">Self-Employed</div>
+                        <p>Membangun antarmuka web yang responsif dan modern untuk berbagai klien menggunakan HTML, CSS, dan JavaScript.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2022 - 2023</div>
+                        <div class="timeline-title">Anggota Divisi IT</div>
+                        <div class="timeline-subtitle">Organisasi Kampus / Komunitas</div>
+                        <p>Mengelola aset digital, merancang materi publikasi, serta mengurus maintenance website internal organisasi.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EDUCATION SECTION -->
+        <section id="education">
+            <h3 class="section-title">Pendidikan</h3>
+            <div class="card">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2020 - 2024</div>
+                        <div class="timeline-title">S1 Teknik Informatika / Sistem Informasi</div>
+                        <div class="timeline-subtitle">Nama Universitas Anda</div>
+                        <p>Fokus pada Rekayasa Perangkat Lunak, Pemrograman Web, dan Manajemen Basis Data.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOCIAL LINKS -->
+        <section>
+            <div class="social-links">
+                <a href="https://github.com" target="_blank" class="social-btn" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://linkedin.com" target="_blank" class="social-btn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://instagram.com" target="_blank" class="social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> Nama Anda. dibuat dengan HTML, CSS, dan JS.</p>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+       JAVASCRIPT SCRIPT
+       ========================================== -->
+    <script>
+        // 1. Fitur Dark Mode / Light Mode Toggle
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = themeToggleBtn.querySelector('i');
+
+        // Cek preferensi lokal sebelumnya
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'light') {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme = 'dark';
+
+            if (currentTheme !== 'light') {
+                newTheme = 'light';
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                newTheme = 'dark';
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // 2. Dynamic Year untuk Footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
